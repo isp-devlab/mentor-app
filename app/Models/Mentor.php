@@ -9,10 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
 
 class Mentor extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +23,7 @@ class Mentor extends Authenticatable
      */
     public $timestamps = true;
     protected $primaryKey = 'id';
-    protected $table = 'users';
+    protected $table = 'mentors';
     protected $fillable = [
         'role_id',
         'name',
@@ -30,7 +32,6 @@ class Mentor extends Authenticatable
         'password',
         'image',
         'is_active',
-        'is_student'
     ];
 
     /**

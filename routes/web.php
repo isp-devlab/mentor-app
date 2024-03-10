@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/login', function () {
+//     return view('dashboard');
+// });
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', [AuthController::class, 'login'])->name('login');
+    Route::post('/login', [AuthController::class, 'login_submit'])->name('login.submit');
 });
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); 
+Route::get('/group', [GroupController::class, 'index'])->name('group'); 
+
