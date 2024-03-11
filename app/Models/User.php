@@ -5,10 +5,11 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     public $timestamps = true;
     protected $primaryKey = 'id';
