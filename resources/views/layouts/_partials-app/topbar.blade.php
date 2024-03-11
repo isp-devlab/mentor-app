@@ -20,8 +20,8 @@
         </svg>
       </span>
     </div>
-    <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
-      <img alt="Logo" src="assets/media/logos/logo-demo7.svg" class="h-30px" />
+    <a href="{{ route('dashboard') }}" class="d-flex align-items-center ms-5">
+      <img alt="Logo" src="{{ asset('assets/media/logo.png') }}" class="h-50px" />
     </a>
   </div>
 </div>

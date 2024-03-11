@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Aplans Boster Mobile | {{ $title }}</title>
+    <title>ISP | {{ $title }}</title>
     <base href=""/>
     <meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Aplans Boster merupakan singkatan dari Aplikasi Pelayanan Sosial Berbasis Online Terintegrasi. Aplans Boster merupakan program inovasi yang dibuat oleh Dinas Sosial Kota Medan dengan tujuan sebagai media dalam pengelolaan data dalam hal pelayanan kepada masyarakat." />
-		<meta name="keywords" content="bansos, dansos, dinsos, dinas, sosial, bantuan, pemkomedan, medan, verifikasi, validasi, verivali" />
+		<meta name="description" content="Learning Management System Informatic Study Platform" />
+		<meta name="keywords" content="unimal, isp, malikussaleh, infomatika, study, platforms, lms, learning" />
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="article" />
-		<meta property="og:title" content="Aplans Boster Verivali | {{ $title }}" />
+		<meta property="og:title" content="Informatics Study Platform | {{ $title }}" />
 		<meta property="og:url" content="{{ url('') }}" />
-		<meta property="og:site_name" content="Aplans Boster Verivali" />
-    <link rel="shortcut icon" href="{{ asset('assets/media/logos/icon.png') }}" />
+		<meta property="og:site_name" content="Informatics Study Platform" />
+    <link rel="shortcut icon" href="{{ asset('assets/media/logo-small.png') }}" />
 
     @include('layouts._partials-app.head')
 

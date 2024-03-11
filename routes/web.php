@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,10 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); 
 Route::get('/group', [GroupController::class, 'index'])->name('group'); 
+
+
+Route::prefix('/setting')->group(function () {
+    Route::get('/group', [SettingController::class, 'group'])->name('setting.group'); 
+    Route::get('/group/{id}/delete', [SettingController::class, 'groupDestroy'])->name('setting.group.destroy'); 
+});
 
