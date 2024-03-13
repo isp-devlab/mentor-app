@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('mentors')->insert([
             'id' => '43b06c63-c6b4-4a02-8fcf-beab2bf723fb',
-            'role_id' => '43b06c63-c6b4-4a02-8fcf-beab2bf723fa',
+            // 'role_id' => '43b06c63-c6b4-4a02-8fcf-beab2bf723fa',
             'name' => 'Fajar',
             'phone_number' => '0895611024559',
             'email' => 'fajarrivaldi2015@gmail.com',

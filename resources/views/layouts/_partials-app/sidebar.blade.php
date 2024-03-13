@@ -45,8 +45,6 @@
           <a class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light  @if ($page_id == 4) active @endif" href="{{ route('setting.group') }}">
             <span class="svg-icon svg-icon-2x">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                <title>Stockholm-icons / Code / Settings4</title>
-                <desc>Created with Sketch.</desc>
                 <defs/>
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                     <rect x="0" y="0" width="24" height="24"/>

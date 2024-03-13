@@ -7,13 +7,10 @@
   <div class="my-5">
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
       <li class="nav-item">
-          <a class="nav-link fs-4 fw-bold" data-bs-toggle="tab" href="#kt_tab_pane_1">Class</a>
+          <a class="nav-link fs-4 fw-bold  @if ($subTitle == 'Class') active text-dark @endif" href="{{ route('setting.class') }}">Class</a>
       </li>
       <li class="nav-item">
-          <a class="nav-link fs-4 fw-bold @if ($subTitle == 'Group') active text-dark @endif" data-bs-toggle="tab" href="{{ route('setting.group') }}">Group</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link fs-6 fw-bold" data-bs-toggle="tab" href="#kt_tab_pane_3">Link 3</a>
+          <a class="nav-link fs-4 fw-bold @if ($subTitle == 'Group') active text-dark @endif" href="{{ route('setting.group') }}">Group</a>
       </li>
     </ul>
   </div>
@@ -30,7 +27,7 @@
                 <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
               </svg>
             </span>
-            <input type="text"  class="form-control form-control-solid w-250px ps-14" name="q" placeholder="Search Groups" />
+            <input type="text"  class="form-control form-control-solid w-250px ps-14" name="q" value="{{ request('q') }}" placeholder="Search Groups" />
           </div>
           <!--end::Search-->
         </form>
@@ -61,7 +58,8 @@
                   </div>
                 </div>
                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                  <form id="kt_modal_add_user_form" class="form" action="#">
+                  <form  class="form" action="{{ route('setting.group.store') }}" method="POST">
+                    @csrf
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                       <div class="fv-row mb-7">
                         <label class="required fw-bold fs-6 mb-2">Group Name</label>
@@ -85,12 +83,12 @@
           </div>
         </div>
       </div>
-      <div class="card-body pt-0">
-        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+      <div class="card-body pt-0 table-responsive">
+        <table class="table align-middle table-row-dashed fs-6 gy-5">
           <thead>
             <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-              <th class="min-w-125px">Class</th>
-              <th class="min-w-125px">Teacher</th>
+              <th class="min-w-125px">Group</th>
+              <th class="min-w-125px">Mentor</th>
               <th class="min-w-125px">Member</th>
               <th class="min-w-125px">Referral Code</th>
               <th class="text-end min-w-100px">Actions</th>
@@ -146,7 +144,7 @@
                 </td>
                 <td>
                   <div class="input-group">
-                    <input type="password" class="form-control form-control-sm" value="{{ $item->referral_code }}" id="password_{{ $item->id }}"  aria-describedby="basic-addon2"/>
+                    <input type="password" class="form-control form-control-sm" value="{{ $item->referral_code }}" id="password_{{ $item->id }}"  aria-describedby="basic-addon2" readonly/>
                     <span class="input-group-text" id="basic-addon2" onclick="password_show_hide('{{ $item->id }}');">
                         <i class="fas fa-eye" id="show_eye_{{ $item->id }}"></i>
                         <i class="fas fa-eye-slash d-none" id="hide_eye_{{ $item->id }}"></i>
@@ -163,17 +161,56 @@
                   </a>
                   <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-3" data-kt-menu="true">
                     <div class="menu-item px-3">
-                      <a href="#" class="menu-link px-3">View</a>
+                      <a href="{{ route('group.overview', $item->id) }}" class="menu-link px-3">View</a>
                     </div>
                     <div class="menu-item px-3">
-                      <a href="#" class="menu-link px-3">Edit</a>
+                      <a href="#" data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}" class="menu-link px-3">Edit</a>
                     </div>
                     <div class="menu-item px-3">
-                      <a href="{{ route('setting.group.destroy', $item->id) }}" class="menu-link px-3">Delete</a>
+                      <a href="#" id="{{ route('setting.group.destroy', $item->id) }}" class="menu-link btn-del px-3">Delete</a>
                     </div>
                   </div>
                 </td>
               </tr>
+
+              <div class="modal fade" id="edit{{ $item->id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                  <div class="modal-content">
+                    <div class="modal-header" id="kt_modal_add_user_header">
+                      <h2 class="fw-bolder">Edit Group</h2>
+                      <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="svg-icon svg-icon-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                      <form  class="form" action="{{ route('setting.group.update', $item->id) }}" method="POST">
+                        @csrf
+                        <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                          <div class="fv-row mb-7">
+                            <label class="required fw-bold fs-6 mb-2">Group Name</label>
+                            <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Group Name" value="{{ $item->name }}" required/>
+                          </div>
+                          <div class="fv-row mb-7">
+                            <label class="required fw-bold fs-6 mb-2">Description</label>
+                            <textarea name="description" class="form-control form-control-solid mb-3 mb-lg-0" required>{{ $item->description }}</textarea>
+                          </div>
+                        </div>
+                        <div class="text-center pt-15">
+                          <button type="reset" class="btn btn-light me-3"data-bs-dismiss="modal" aria-label="Close">Discard</button>
+                          <button type="submit" class="btn btn-primary">
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
               @endforeach
           </tbody>
         </table>
@@ -183,7 +220,7 @@
           <div class="fs-6 fw-semibold text-gray-700">
             Showing {{ $group->firstItem() }} to {{ $group->lastItem() }} of {{ $group->total() }}  records
           </div>
-              <ul class="pagination">
+            <ul class="pagination">
               @if ($group->onFirstPage())
                   <li class="page-item previous">
                       <a href="#" class="page-link"><i class="previous"></i></a>
@@ -209,9 +246,8 @@
                       <a href="#" class="page-link"><i class="next"></i></a>
                   </li>
               @endif
-              
-          </ul>
-      </div>
+            </ul>
+        </div>
       </div>
     </div>
   </div>
