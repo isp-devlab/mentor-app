@@ -22,7 +22,7 @@ class Teacher extends Model
 
     public function group(): BelongsTo
     {
-        return $this->belongsTo(Group::class, 'class_id');
+        return $this->belongsTo(Group::class, 'group_id');
     }
 
     public function mentor(): BelongsTo

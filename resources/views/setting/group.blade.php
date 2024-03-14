@@ -104,41 +104,38 @@
                   </div>
                 </td>
                 <td>
-                  {{-- {{ dd() }} --}}
                   <div class="symbol-group symbol-hover mb-9">
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Alan Warden">
-                      <span class="symbol-label bg-warning text-inverse-warning fw-bolder">A</span>
-                    </div>
+                    @foreach ($item->teacher as $mentor)
+                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="{{ $mentor->mentor->name }}">
+                      @if($mentor->mentor->image)
+                        <img src="{{ $mentor->mentor->image }}" alt="pic">
+                      @else
+                        <img src="https://ui-avatars.com/api/?background=random&name={{ $mentor->mentor->name }}" alt="pic">
+                      @endif                    </div>
+                    @endforeach
                   </div>
                 </td>
                 <td>
                   <div class="symbol-group symbol-hover mb-9">
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Alan Warden">
-                      <span class="symbol-label bg-warning text-inverse-warning fw-bolder">A</span>
-                    </div>
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Michael Eberon">
-                      <img alt="Pic" src="assets/media/avatars/150-12.jpg" />
-                    </div>
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Michelle Swanston">
-                      <img alt="Pic" src="assets/media/avatars/150-13.jpg" />
-                    </div>
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Francis Mitcham">
-                      <img alt="Pic" src="assets/media/avatars/150-5.jpg" />
-                    </div>
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Susan Redwood">
-                      <span class="symbol-label bg-primary text-inverse-primary fw-bolder">S</span>
-                    </div>
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Melody Macy">
-                      <img alt="Pic" src="assets/media/avatars/150-3.jpg" />
-                    </div>
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Perry Matthew">
-                      <span class="symbol-label bg-info text-inverse-info fw-bolder">P</span>
-                    </div>
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Barry Walter">
-                      <img alt="Pic" src="assets/media/avatars/150-7.jpg" />
-                    </div>
+                    @php
+                      $members = $item->member;
+                    @endphp
+
+                    @for ($i = 0; $i < min(5, count($members)); $i++)
+                      @php
+                        $member = $members[$i];
+                      @endphp
+
+                      <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="{{ $member->user->name }}">
+                        @if($member->user->image)
+                          <img src="{{ $member->user->image }}" alt="pic">
+                        @else
+                          <img src="https://ui-avatars.com/api/?background=random&name={{ $member->user->name }}" alt="pic">
+                        @endif
+                      </div>
+                    @endfor
                     <a href="#" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users">
-                      <span class="symbol-label bg-dark text-gray-300 fs-8 fw-bolder">+42</span>
+                      <span class="symbol-label bg-dark text-gray-300 fs-8 fw-bolder">+{{ count($members) }}</span>
                     </a>
                   </div>
                 </td>

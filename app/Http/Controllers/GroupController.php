@@ -20,6 +20,7 @@ class GroupController extends Controller
             'subTitle' => null,
             'page_id' => 2,
         ];
+        // dd($data['group'][0]->group);
         return view('group.index',  $data);
     }
 
