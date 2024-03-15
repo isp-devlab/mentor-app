@@ -15,7 +15,7 @@ class SettingController extends Controller
 {
     public function Class(Request $request){
         $search = $request->input('q');
-        $data = Classes::where('name', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(10);
+        $data = Classes::where('name', 'ILIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(10);
         $data->appends(['q' => $search]);
         $data = [
             'title' => 'Setting',
@@ -29,7 +29,7 @@ class SettingController extends Controller
 
     public function group(Request $request){
         $search = $request->input('q');
-        $data = Group::where('name', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(10);
+        $data = Group::where('name', 'ILIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(10);
         $data->appends(['q' => $search]);
         $data = [
             'title' => 'Setting',
@@ -77,13 +77,11 @@ class SettingController extends Controller
         return redirect()->route('setting.group')->with('error', 'Validation Error')->withInput()->withErrors($validator);
         }
 
-
         $group =  Group::find($id);
         $group->name = $request->input('name');
         $group->description = $request->input('description');
         $group->save();
 
         return redirect()->route('setting.group')->with('success', 'Group updated successfully');
-
     }
 }

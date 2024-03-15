@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Discussion;
 use App\Models\Group;
 use App\Models\Member;
 use App\Models\Mentor;
@@ -45,7 +46,12 @@ class GroupController extends Controller
     public function mentor($id){
         $data = [
             'group' => Group::findOrFail($id),
-            'allMentors' => Mentor::where('is_active', true)->get(),
+            'allMentors' => Mentor::where('is_active', true)
+                        ->whereNotIn('id', function ($query) {
+                            $query->select('mentor_id')
+                                ->from('teachers');
+                        })
+            ->get(),
             'mentor' => Teacher::where('group_id', $id)->get(),
             'title' => 'Group',
             'subTitle' => 'Mentor',
@@ -95,10 +101,10 @@ class GroupController extends Controller
         return redirect()->route('group.member', $id)->with('success','Member Leaved successfully');
     }
 
-
     public function discussion($id){
         $data = [
             'group' => Group::findOrFail($id),
+            'discussion' => Discussion::where('group_id', $id)->get(),
             'title' => 'Group',
             'subTitle' => 'Discussion',
             'page_id' => 2,

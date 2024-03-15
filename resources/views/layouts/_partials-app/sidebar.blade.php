@@ -19,16 +19,6 @@
             </span>
           </a>
         </li>
-        <li class="nav-item my-4" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="right" title="Class">
-          <a class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light" href="#kt_aside_nav_tab_menu">
-            <span class="svg-icon svg-icon-2x">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path opacity="0.3" d="M20 15H4C2.9 15 2 14.1 2 13V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V13C22 14.1 21.1 15 20 15ZM13 12H11C10.5 12 10 12.4 10 13V16C10 16.5 10.4 17 11 17H13C13.6 17 14 16.6 14 16V13C14 12.4 13.6 12 13 12Z" fill="black" />
-                <path d="M14 6V5H10V6H8V5C8 3.9 8.9 3 10 3H14C15.1 3 16 3.9 16 5V6H14ZM20 15H14V16C14 16.6 13.5 17 13 17H11C10.5 17 10 16.6 10 16V15H4C3.6 15 3.3 14.9 3 14.7V18C3 19.1 3.9 20 5 20H19C20.1 20 21 19.1 21 18V14.7C20.7 14.9 20.4 15 20 15Z" fill="black" />
-              </svg>
-            </span>
-          </a>
-        </li>
         <li class="nav-item my-4" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="right" title="Group">
           <a class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light @if ($page_id == 2) active @endif" href="{{ route('group') }}">
             <span class="svg-icon svg-icon-2x">
@@ -39,7 +29,18 @@
             </span>
           </a>
         </li>
+        <li class="nav-item my-4" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="right" title="Class">
+          <a class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light" href="#kt_aside_nav_tab_menu">
+            <span class="svg-icon svg-icon-2x">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path opacity="0.3" d="M20 15H4C2.9 15 2 14.1 2 13V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V13C22 14.1 21.1 15 20 15ZM13 12H11C10.5 12 10 12.4 10 13V16C10 16.5 10.4 17 11 17H13C13.6 17 14 16.6 14 16V13C14 12.4 13.6 12 13 12Z" fill="black" />
+                <path d="M14 6V5H10V6H8V5C8 3.9 8.9 3 10 3H14C15.1 3 16 3.9 16 5V6H14ZM20 15H14V16C14 16.6 13.5 17 13 17H11C10.5 17 10 16.6 10 16V15H4C3.6 15 3.3 14.9 3 14.7V18C3 19.1 3.9 20 5 20H19C20.1 20 21 19.1 21 18V14.7C20.7 14.9 20.4 15 20 15Z" fill="black" />
+              </svg>
+            </span>
+          </a>
+        </li>
       </ul>
+      @if (Auth::user()->role->name == 'Admin')
       <ul class="nav flex-column mt-10">
         <li class="nav-item my-4" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="right" title="Setting">
           <a class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light  @if ($page_id == 4) active @endif" href="{{ route('setting.group') }}">
@@ -56,7 +57,7 @@
           </a>
         </li>
         <li class="nav-item my-4" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="right" title="User Management">
-          <a class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light" href="#kt_aside_nav_tab_menu">
+          <a class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light @if ($page_id == 5) active @endif" href="{{ route('user-management.mentor') }}" >
             <span class="svg-icon svg-icon-2x">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                 <defs/>
@@ -70,6 +71,7 @@
           </a>
         </li>
       </ul>
+      @endif
     </div>
   </div>
   <div class="aside-footer d-flex flex-column align-items-center flex-column-auto mt-auto mt-lg-0" id="kt_aside_footer">

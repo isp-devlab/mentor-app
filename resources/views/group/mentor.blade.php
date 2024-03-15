@@ -49,6 +49,7 @@
       <div class="card-body py-10">
         <div class="d-flex align-items-center justify-content-between mb-9">
           <h2>Mentor</h2>
+          @if (Auth::user()->role->name == 'Admin')
           <div>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
               <span class="svg-icon svg-icon-2">
@@ -94,6 +95,7 @@
               </div>
             </div>
           </div>
+          @endif
 
         </div>
         <div class="table-responsive">
@@ -127,6 +129,7 @@
                     {{ $item->created_at}}
                   </td>
                   <td class="text-end">
+                    @if (Auth::user()->role->name == 'Admin' OR Auth::user()->id == $item->mentor->id)
                     <a href="#" id="{{ route('group.mentor.destroy', ['id' => $group->id, 'idTeacher' => $item->id]) }}" class="btn btn-light btn-active-light-primary btn-sm btn-del">
                       <span class="svg-icon svg-icon-5 m-0">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -140,6 +143,7 @@
                       </svg>
                       </span>
                     </a>
+                    @endif
                   </td>
                 </tr>
                 @endforeach
