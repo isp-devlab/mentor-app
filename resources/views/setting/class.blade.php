@@ -7,10 +7,10 @@
   <div class="my-5">
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
       <li class="nav-item">
-          <a class="nav-link fs-4 fw-bold  @if ($subTitle == 'Class') active text-dark @endif" href="{{ route('setting.class') }}">Class</a>
+          <a class="nav-link fs-4 fw-bold @if ($subTitle == 'Group') active text-dark @endif" href="{{ route('setting.group') }}">Group</a>
       </li>
       <li class="nav-item">
-          <a class="nav-link fs-4 fw-bold @if ($subTitle == 'Group') active text-dark @endif" href="{{ route('setting.group') }}">Group</a>
+          <a class="nav-link fs-4 fw-bold  @if ($subTitle == 'Class') active text-dark @endif" href="{{ route('setting.class') }}">Class</a>
       </li>
     </ul>
   </div>
