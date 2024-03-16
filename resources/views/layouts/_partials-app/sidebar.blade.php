@@ -93,7 +93,7 @@
         </div>
         <div class="separator my-2"></div>
         <div class="menu-item px-5">
-          <a href="../../demo7/dist/account/overview.html" class="menu-link px-5">My Profile</a>
+          <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
         </div>
         <div class="menu-item px-5">
           <a href="{{ route('logout') }}" class="menu-link px-5">

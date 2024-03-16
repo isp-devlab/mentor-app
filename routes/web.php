@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserManagementController;
 
@@ -30,6 +31,11 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
+Route::prefix('/profile')->middleware('auth')->group(function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
+});
 
 Route::prefix('/group')->middleware('auth')->group(function () {
     Route::get('/', [GroupController::class, 'index'])->name('group'); 
