@@ -30,7 +30,7 @@
           </a>
         </li>
         <li class="nav-item my-4" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="right" title="Class">
-          <a class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light" href="#kt_aside_nav_tab_menu">
+          <a class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light @if ($page_id == 3) active @endif" href="{{ route('class') }}">
             <span class="svg-icon svg-icon-2x">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path opacity="0.3" d="M20 15H4C2.9 15 2 14.1 2 13V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V13C22 14.1 21.1 15 20 15ZM13 12H11C10.5 12 10 12.4 10 13V16C10 16.5 10.4 17 11 17H13C13.6 17 14 16.6 14 16V13C14 12.4 13.6 12 13 12Z" fill="black" />

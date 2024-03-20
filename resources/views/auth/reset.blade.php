@@ -2,11 +2,10 @@
 
 @section('content')
 
-<form class="form w-100" method="POST" action="{{ route('login.submit') }}">
+<form class="form w-100" method="POST" action="{{ route('reset.submit', $token) }}">
   @csrf
   <div class="text-center mb-10">
-      <h1 class="text-dark mb-3">Mentor Login</h1>
-      <div class="text-gray-400 fs-5">Please enter your email and password</div>
+      <h1 class="text-dark mb-3">Reset Password</h1>
   </div>
   @if (session()->has('warning'))
     <div class="alert alert-dismissible bg-warning d-flex align-items-center flex-column flex-sm-row p-5 mb-10">
@@ -31,19 +30,23 @@
     </div>
   @endif
   <div class="fv-row mb-5">
-    <label class="form-label fs-6 text-dark">Email</label>
-    <input class="form-control form-control-lg @error('email') is-invalid @enderror" placeholder="Email" type="email" name="email" value="{{ old('email') }}" autocomplete="off" />
-    @error('email')
-      <div class="invalid-feedback">
-        {{ $message }}
+    <div class="alert alert-dismissible bg-light-dark border border-dashed border-dark border-3 d-flex align-items-center flex-column flex-sm-row">
+      <div class="symbol-label">
+        <div class="symbol symbol-circle symbol-60px overflow-hidden me-5">
+            <div class="symbol-label">
+              <img src="@if($user->image) {{ $user->image }} @else https://ui-avatars.com/api/?background=000C32&color=fff&name={{ $user->name }} @endif" alt="{{ $user->name }}" class="w-100">
+            </div>
+        </div>
       </div>
-    @enderror
-  </div>
-  <div class="fv-row mb-5">
-    <div class="d-flex flex-stack mb-2">
-      <label class="form-label text-dark fs-6 mb-0">Password</label>
-      <a href="{{ route('forget') }}" class="link-dark fs-6 fw-bolder">Forgot Password ?</a>
+      <div class="d-flex flex-column pe-0 pe-sm-10">
+          <h4 class="mb-1">{{ $user->name }}</h4>
+          <span class="text-muted">{{ $user->email }}</span>
+      </div>
     </div>
+  </div>
+  <input type="hidden" value="{{$user->email}}" name="email">
+  <div class="fv-row mb-5">
+    <label class="form-label text-dark fs-6">New Password</label>
     <input class="form-control form-control-lg @error('password') is-invalid @enderror" placeholder="******" type="password" name="password" autocomplete="off" />
     @error('password')
       <div class="invalid-feedback">
@@ -53,13 +56,13 @@
   </div>
   <div class="text-center">
       <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-          <span class="indicator-label">Login</span>
+          <span class="indicator-label">Change Password</span>
           <span class="indicator-progress">Please wait...
           <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
       </button>
 
-      <a href="{{ route('register') }}" id="kt_sign_in_submit" class="btn btn-lg btn-light w-100 mb-5">
-        <span class="indicator-label">Register</span>
+      <a href="{{ route('login') }}" id="kt_sign_in_submit" class="btn btn-lg btn-light w-100 mb-5">
+        <span class="indicator-label">Back</span>
     </a>
   </div>
 </form>

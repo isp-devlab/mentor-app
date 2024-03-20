@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClassController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\GroupController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserManagementController;
 
 /*
@@ -19,15 +21,24 @@ use App\Http\Controllers\UserManagementController;
 |
 */
 
-// Route::get('/login', function () {
-//     return view('dashboard');
-// });
-Route::middleware(['guest'])->group(function () {
-    Route::get('/', [AuthController::class, 'login'])->name('login');
-    Route::post('/login', [AuthController::class, 'login_submit'])->name('login.submit');
+Route::get('/', function () {
+    return redirect()->route('login');
 });
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::post('editor/upload', [Controller::class, 'upload'])->name('upload')->middleware('auth');
+
+Route::middleware(['guest'])->group(function () {
+    Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/auth/login', [AuthController::class, 'loginSubmit'])->name('login.submit');
+    Route::get('/auth/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/auth/register', [AuthController::class, 'registerSubmit'])->name('register.submit');
+    Route::get('/auth/forget', [AuthController::class, 'forget'])->name('forget');
+    Route::post('/auth/forget', [AuthController::class, 'forgetSubmit'])->name('forget.submit');
+    Route::get('/auth/forget/{token}/reset', [AuthController::class, 'reset'])->name('reset');
+    Route::post('/auth/forget/{token}/reset', [AuthController::class, 'resetSubmit'])->name('reset.submit');
+
+});
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
@@ -35,6 +46,10 @@ Route::prefix('/profile')->middleware('auth')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('profile');
     Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
+});
+
+Route::prefix('/class')->middleware('auth')->group(function () {
+    Route::get('/', [ClassController::class, 'index'])->name('class'); 
 });
 
 Route::prefix('/group')->middleware('auth')->group(function () {
@@ -49,7 +64,10 @@ Route::prefix('/group')->middleware('auth')->group(function () {
     Route::get('/{id}/member', [GroupController::class, 'member'])->name('group.member'); 
     Route::get('/{id}/member/{idMember}', [GroupController::class, 'memberDestroy'])->name('group.member.destroy'); 
     
-    Route::get('/{id}/discussion', [GroupController::class, 'discussion'])->name('group.discussion'); 
+    Route::get('/{id}/discussion', [GroupController::class, 'discussion'])->name('group.discussion');
+    Route::post('/{id}/discussion', [GroupController::class, 'discussionStore'])->name('group.discussion.store'); 
+    Route::get('/{id}/discussion/{idDiscussion}', [GroupController::class, 'discussionDestroy'])->name('group.discussion.destroy'); 
+
     Route::get('/{id}/assignment', [GroupController::class, 'assignment'])->name('group.assignment'); 
 });
 

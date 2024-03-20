@@ -21,7 +21,7 @@
       </span>
     </div>
     <a href="{{ route('dashboard') }}" class="d-flex align-items-center ms-5">
-      <img alt="Logo" src="{{ asset('assets/media/logo.png') }}" class="h-50px" />
+      <img alt="Logo" src="{{ asset('assets/media/logo.png') }}" class="h-35px" />
     </a>
   </div>
 </div>

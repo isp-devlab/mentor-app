@@ -77,7 +77,7 @@
                   </div>
                 </div>
                 <div class="modal-body scroll-y mx-2 mx-xl-5 my-3">
-                  <form  class="form" action="{{ route('group.mentor.store', $group->id) }}" method="POST">
+                  <form  class="form" id="formAdd" action="{{ route('group.mentor.store', $group->id) }}" method="POST">
                     @csrf
                     <select class="form-select" placeholder="Select an option" id="kt_docs_select2_country" name="mentorId" required>
                       @foreach ($allMentors as $item)
@@ -86,7 +86,7 @@
                   </select>
                     <div class="text-center pt-10">
                       <button type="reset" class="btn btn-light me-3"data-bs-dismiss="modal" aria-label="Close">Discard</button>
-                      <button type="submit" class="btn btn-primary">
+                      <button type="button" id="submitButton" class="btn btn-primary" onclick="disableButton('formAdd')">
                         Add
                       </button>
                     </div>
@@ -158,9 +158,19 @@
 @endsection
 
 @section('script')
+@if (session('success') == 'Group created successfully')
+  <script>
+    function showMyModal() {
+        var modal = new bootstrap.Modal(document.getElementById('kt_modal_add_user'));
+        modal.show();
+    }
+    // Panggil fungsi setelah DOM dimuat
+    document.addEventListener('DOMContentLoaded', showMyModal);
+  </script>
+@endif
 <script>
   // Format options
-const format = (item) => {
+  const format = (item) => {
     if (!item.id) {
         return item.text;
     }

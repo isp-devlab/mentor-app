@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\User;
 use App\Models\Group;
+use App\Models\Mentor;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Discussion extends Model
 {
@@ -18,7 +18,7 @@ class Discussion extends Model
     protected $table = 'discussions';
     protected $fillable = [
         'group_id',
-        'user_id',
+        'mentor_id',
         'content',
     ];
 
@@ -27,9 +27,9 @@ class Discussion extends Model
         return $this->belongsTo(Group::class, 'group_id');
     }
 
-    public function user(): BelongsTo
+    public function mentor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Mentor::class, 'mentor_id');
     }
 
     public function comment()

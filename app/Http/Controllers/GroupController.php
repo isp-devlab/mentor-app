@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Discussion;
 use App\Models\Group;
 use App\Models\Member;
 use App\Models\Mentor;
 use App\Models\Teacher;
+use App\Models\Discussion;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Services\UploadService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -74,7 +75,6 @@ class GroupController extends Controller
         $teacher->save();
 
         return redirect()->route('group.mentor', $id)->with('success', 'Mentor joined successfully');
-
     }
 
     public function mentorDestroy($id, $idTeacher){
@@ -104,12 +104,64 @@ class GroupController extends Controller
     public function discussion($id){
         $data = [
             'group' => Group::findOrFail($id),
-            'discussion' => Discussion::where('group_id', $id)->get(),
+            'discussion' => Discussion::where('group_id', $id)->orderBy('created_at', 'desc')->paginate(5),
             'title' => 'Group',
             'subTitle' => 'Discussion',
             'page_id' => 2,
         ];
         return view('group.discussion',  $data);
+    }
+
+    public function discussionStore($id, Request $request){
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'content' => 'required',
+            'attachment' => 'nullable|sometimes|mimes:jpeg,png,jpg,pdf,xlxs,docx,pptx|max:2000',
+        ]);
+        if ($validator->fails()) {
+        return redirect()->route('group.discussion', $id)->with('error', 'Validation Error')->withInput()->withErrors($validator);
+        }
+
+        $discussion =  New Discussion();
+        $discussion->group_id = $id;
+        $discussion->mentor_id = Auth::user()->id;
+        $discussion->title = $request->title;
+        $discussion->content = $request->content;
+        if($request->has('attachment')){
+            $file = $request->file('attachment');
+            $originalName = $file->getClientOriginalName();
+            $path = UploadService::api()->save($file, 'discussion/group_'.$id);
+            $sizeInBytes = $file->getSize();
+            $sizeInKilobytes = $sizeInBytes / 1024;
+            $sizeInMegabytes = $sizeInKilobytes / 1024;
+            $sizeInGigabytes = $sizeInMegabytes / 1024;
+            $formattedSize = '';
+            if ($sizeInGigabytes >= 1) {
+                $formattedSize = number_format($sizeInGigabytes, 2) . ' GB';
+            } elseif ($sizeInMegabytes >= 1) {
+                $formattedSize = number_format($sizeInMegabytes, 2) . ' MB';
+            } elseif ($sizeInKilobytes >= 1) {
+                $formattedSize = number_format($sizeInKilobytes, 2) . ' KB';
+            } else {
+                $formattedSize = $sizeInBytes . ' bytes';
+            }            
+            $doc = [
+                'file' =>  $originalName,
+                'path' => $path,
+                'size' => $formattedSize
+            ];
+            $discussion->attach_file = json_encode($doc);
+        };
+        $discussion->save();
+
+        return redirect()->route('group.discussion', $id)->with('success', 'Discussion added successfully');
+    }
+
+    
+    public function discussionDestroy($id, $idDiscussion){
+        $discussion = Discussion::find($idDiscussion);
+        $discussion->delete();
+        return redirect()->route('group.discussion', $id)->with('success','Discussion deleted successfully');
     }
 
     public function assignment($id){

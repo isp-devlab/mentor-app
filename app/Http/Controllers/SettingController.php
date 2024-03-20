@@ -64,7 +64,7 @@ class SettingController extends Controller
         $group->referral_code = Str::lower(Str::random(8));
         $group->save();
 
-        return redirect()->route('group.overview', $uuid)->with('success', 'Group created successfully');
+        return redirect()->route('group.mentor', $uuid)->with('success', 'Group created successfully');
 
     }
 
