@@ -8,6 +8,7 @@ use App\Models\Mentor;
 use App\Models\Teacher;
 use App\Models\Discussion;
 use Illuminate\Support\Str;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Services\UploadService;
 use Illuminate\Support\Facades\Auth;
@@ -130,7 +131,7 @@ class GroupController extends Controller
         if($request->has('attachment')){
             $file = $request->file('attachment');
             $originalName = $file->getClientOriginalName();
-            $path = UploadService::api()->save($file, 'discussion/group_'.$id);
+            $path = UploadService::api()->save($file, 'group_'.$id.'/discussion');
             $sizeInBytes = $file->getSize();
             $sizeInKilobytes = $sizeInBytes / 1024;
             $sizeInMegabytes = $sizeInKilobytes / 1024;
@@ -153,6 +154,11 @@ class GroupController extends Controller
             $discussion->attach_file = json_encode($doc);
         };
         $discussion->save();
+
+        $notification = new Notification();
+        $notification->group_id = $id;
+        $notification->content = 'Diskusi baru "<b>'.$request->title.'</b>" telah ditambahkan oleh mentor mu';
+        $notification->save();
 
         return redirect()->route('group.discussion', $id)->with('success', 'Discussion added successfully');
     }

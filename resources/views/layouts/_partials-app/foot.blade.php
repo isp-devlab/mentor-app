@@ -3,7 +3,7 @@
 <script>
   function disableButton(action) {
     var button = document.getElementById('submitButton');
-    button.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div> loading...';
+    button.innerHTML = '<div class="spinner-border spinner-border-sm me-1" role="status"><span class="visually-hidden">Loading...</span></div> loading...';
     button.disabled = true;
     document.getElementById(action).submit();
   }

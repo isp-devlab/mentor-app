@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="form w-100" method="POST" action="{{ route('login.submit') }}">
+<form class="form w-100" method="POST" id="login" action="{{ route('login.submit') }}">
   @csrf
   <div class="text-center mb-10">
       <h1 class="text-dark mb-3">Mentor Login</h1>
@@ -52,12 +52,9 @@
     @enderror
   </div>
   <div class="text-center">
-      <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-          <span class="indicator-label">Login</span>
-          <span class="indicator-progress">Please wait...
-          <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+      <button type="button" id="submitButton" class="btn btn-primary btn-lg w-100 mb-5" onclick="disableButton('login')">
+        Login
       </button>
-
       <a href="{{ route('register') }}" id="kt_sign_in_submit" class="btn btn-lg btn-light w-100 mb-5">
         <span class="indicator-label">Register</span>
     </a>

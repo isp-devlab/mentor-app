@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Attachment extends Model
 {
@@ -19,8 +20,6 @@ class Attachment extends Model
         'user_id',
         'attachment_path',
         'content',
-        'submited_time',
-        'point'
     ];
 
     public function assignment(): BelongsTo
@@ -31,5 +30,10 @@ class Attachment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function evaluation(): HasOne
+    {
+        return $this->hasOne(User::class, 'attachment_id');
     }
 }

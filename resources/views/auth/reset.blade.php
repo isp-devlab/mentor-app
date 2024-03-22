@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="form w-100" method="POST" action="{{ route('reset.submit', $token) }}">
+<form class="form w-100" method="POST" id="change" action="{{ route('reset.submit', $token) }}">
   @csrf
   <div class="text-center mb-10">
       <h1 class="text-dark mb-3">Reset Password</h1>
@@ -55,10 +55,8 @@
     @enderror
   </div>
   <div class="text-center">
-      <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-          <span class="indicator-label">Change Password</span>
-          <span class="indicator-progress">Please wait...
-          <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+      <button type="button" id="submitButton" class="btn btn-primary btn-lg w-100 mb-5" onclick="disableButton('change')">
+        Change Password
       </button>
 
       <a href="{{ route('login') }}" id="kt_sign_in_submit" class="btn btn-lg btn-light w-100 mb-5">

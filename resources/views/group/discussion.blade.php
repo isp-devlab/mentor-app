@@ -98,7 +98,7 @@
                 </div>
                 <div class="text-center pt-10">
                   <button type="reset" class="btn btn-light me-3"data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                  <button type="button" id="submitButton" class="btn btn-primary" onclick="disableButton('formAdd')">
+                  <button type="submit" id="submitButton" class="btn btn-primary" onclick="disableButton('formAdd')">
                     Add
                   </button>
                 </div>
