@@ -34,6 +34,6 @@ class Attachment extends Model
 
     public function evaluation(): HasOne
     {
-        return $this->hasOne(User::class, 'attachment_id');
+        return $this->hasOne(Evaluation::class, 'attachment_id');
     }
 }
